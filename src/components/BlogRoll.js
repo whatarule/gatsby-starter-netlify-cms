@@ -6,8 +6,12 @@ import PreviewCompatibleImage from './PreviewCompatibleImage'
 class BlogRoll extends React.Component {
   render() {
     const { data } = this.props
-    const { edges: posts } = data.allMarkdownRemark
+    const { edges: _posts } = data.allMarkdownRemark
 
+    console.log(_posts.map(p => p.node.frontmatter.tags.includes('test')))
+    console.log(_posts.filter(p => p.node.frontmatter.tags.includes('test')))
+
+    const posts = _posts.filter(p => p.node.frontmatter.tags.includes('news'))
     return (
       <div className="columns is-multiline">
         {posts &&
@@ -82,6 +86,7 @@ export default () => (
                 slug
               }
               frontmatter {
+                tags
                 title
                 templateKey
                 date(formatString: "MMMM DD, YYYY")
